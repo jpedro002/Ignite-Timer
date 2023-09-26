@@ -1,22 +1,47 @@
 import { Timer, Scroll } from "phosphor-react";
 import LogoIgnite from "../assets/Logo-ignite.svg";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
+
+type IconToActivate = 'clock' | 'hist';
 
 export default function Header() {
+  const [activeIcon, setactiveIcon] = useState<IconToActivate>("clock");
+
+  const handleChangeIcon = (iconToActivate:IconToActivate) => {
+    setactiveIcon(iconToActivate);
+  };
+
   return (
     <header className="flex justify-between">
       <img src={LogoIgnite} alt="" />
       <nav className="flex gap-4 items-center">
-        <NavLink to="/">
+        <NavLink
+          to="/"
+          onClick={() => {
+            handleChangeIcon("clock");
+          }}
+        >
           <Timer
-            className="text-green-500 hover:border-b-green-500 border-b-2 border-transparent "
-            size={24}
+            className={` hover:outline-green-500 active:border-b-green-500
+             border-transparent border-2   ${
+               activeIcon === "clock" ? "text-emerald-600" : "text-white"
+             } `}
+            size={26}
           />
         </NavLink>
-        <NavLink to="/history">
+        <NavLink
+          to="/history"
+          onClick={() => {
+            handleChangeIcon("hist");
+          }}
+        >
           <Scroll
-            className="text-white hover:outline-green-500 outline-2 outline-transparent "
-            size={24}
+            className={` hover:outline-green-500 active:border-b-green-500
+             border-transparent border-2   ${
+               activeIcon === "hist" ? "text-emerald-600" : "text-white"
+             } `}
+            size={26}
           />
         </NavLink>
       </nav>
